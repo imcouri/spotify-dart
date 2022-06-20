@@ -83,8 +83,10 @@ class Me extends EndpointPaging {
   }
 
   /// Get the current user's top tracks.
-  Future<Iterable<Track>> topTracks() async {
-    final jsonString = await _api._get('$_path/top/tracks');
+  /// [range] - Over what time frame the affinities are computed
+  Future<Iterable<Track>> topTracks(String? range) async {
+    String timeRange = range != null ? range : 'short_term'; //makes sure no empty/null value is passed as time_range
+    final jsonString = await _api._get('$_path/top/tracks?time_range=$timeRange');
     final map = json.decode(jsonString);
 
     final items = map['items'] as Iterable<dynamic>;
@@ -92,8 +94,10 @@ class Me extends EndpointPaging {
   }
 
   /// Get the current user's top artists.
-  Future<Iterable<Artist>> topArtists() async {
-    final jsonString = await _api._get('$_path/top/artists');
+  /// [range] - Over what time frame the affinities are computed
+  Future<Iterable<Artist>> topArtists(String? range) async {
+    String timeRange = range != null ? range : 'short_term'; //makes sure no empty/null value is passed as time_range
+    final jsonString = await _api._get('$_path/top/artists?time_range=$timeRange');
     final map = json.decode(jsonString);
 
     final items = map['items'] as Iterable<dynamic>;
